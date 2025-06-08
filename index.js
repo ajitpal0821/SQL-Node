@@ -13,8 +13,9 @@ app.set('views', path.join(__dirname, "/views"));
 app.use(methodOverride('_method'))
 
 // form submission
-
 app.use(express.urlencoded({ extended: true }))
+
+// creating connection string to DB
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -31,9 +32,8 @@ let createRandomUser = () => {
     ];
 }
 
-
+//getting all users
 app.get('/user', (req, res) => {
-    // let q = `select count(*) AS count from user`
     let q = `select *  from user`
 
     try {
@@ -56,6 +56,8 @@ app.get('/user', (req, res) => {
         res.send('error Occured')
     }
 })
+
+//getting count of users
 app.get('/', (req, res) => {
     let q = `select count(*) AS count from user`
 
@@ -75,6 +77,7 @@ app.get('/', (req, res) => {
     }
 })
 
+//opening editing form
 app.get('/user/:id/edit', (req, res) => {
     let { id } = req.params;
     console.log(id)
